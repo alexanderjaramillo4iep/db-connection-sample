@@ -20,6 +20,10 @@
         <servlet-name>Galeria</servlet-name>
         <servlet-class>controladores.Galeria</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NuevaImagen</servlet-name>
+        <servlet-class>controladores.NuevaImagen</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductoController</servlet-name>
         <url-pattern>/ProductoController</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>Galeria</servlet-name>
         <url-pattern>/Galeria</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NuevaImagen</servlet-name>
+        <url-pattern>/NuevaImagen</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
