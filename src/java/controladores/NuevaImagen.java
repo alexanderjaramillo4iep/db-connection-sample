@@ -28,7 +28,7 @@ import modelos.Tipo;
  *
  * @author USUARIO
  */
-public class NuevaImagen1 extends HttpServlet {
+public class NuevaImagen extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -107,9 +107,9 @@ public class NuevaImagen1 extends HttpServlet {
             ps.setInt(3, tipo);
             ps.execute();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(NuevaImagen1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NuevaImagen.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(NuevaImagen1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NuevaImagen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
