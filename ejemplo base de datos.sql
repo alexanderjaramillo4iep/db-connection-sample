@@ -11,12 +11,14 @@ INSERT INTO `ejemplo`.`producto` (`nombre`, `precio`) VALUES ('cartuchera', '500
 INSERT INTO `ejemplo`.`producto` (`nombre`, `precio`) VALUES ('gomitas', '1000');
 INSERT INTO `ejemplo`.`producto` (`nombre`, `precio`) VALUES ('chocolatina', '500');
 
-CREATE TABLE `ejemplo`.`imagenes` (
-  `idimagenes` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NULL,
-  `ruta` VARCHAR(200) NULL,
+CREATE TABLE `imagenes` (
+  `idimagenes` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) DEFAULT NULL,
+  `ruta` varchar(200) DEFAULT NULL,
+  `tipo` int(11) 1 NULL,
   PRIMARY KEY (`idimagenes`),
-  UNIQUE INDEX `imagenescol_UNIQUE` (`ruta` ASC));
+  UNIQUE KEY `imagenescol_UNIQUE` (`ruta`)
+);
 
 INSERT INTO `ejemplo`.`imagenes` (`nombre`, `ruta`) VALUES ('escala grises', 'https://picsum.photos/g/200/300');
 INSERT INTO `ejemplo`.`imagenes` (`nombre`, `ruta`) VALUES ('imagen 0', 'https://picsum.photos/200/300?image=0');
@@ -24,3 +26,12 @@ INSERT INTO `ejemplo`.`imagenes` (`nombre`, `ruta`) VALUES ('imagen 1', 'https:/
 INSERT INTO `ejemplo`.`imagenes` (`nombre`, `ruta`) VALUES ('imagen borrosa', 'https://picsum.photos/200/300/?blur');
 INSERT INTO `ejemplo`.`imagenes` (`nombre`, `ruta`) VALUES ('gravity', 'https://picsum.photos/200/300/?gravity=east');
 INSERT INTO `ejemplo`.`imagenes` (`nombre`, `ruta`) VALUES ('aves', 'https://significadoconcepto.com/wp-content/uploads/2017/12/Anatom%C3%ADa_de_las_Aves.jpg');
+
+CREATE TABLE `ejemplo`.`tipo` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`));
+
+INSERT INTO `ejemplo`.`tipo` (`nombre`) VALUES ('paisaje');
+INSERT INTO `ejemplo`.`tipo` (`nombre`) VALUES ('blanco y negro');
+INSERT INTO `ejemplo`.`tipo` (`nombre`) VALUES ('animales');
