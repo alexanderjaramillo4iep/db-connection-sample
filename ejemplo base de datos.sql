@@ -1,5 +1,7 @@
 CREATE DATABASE ejemplo;
 
+use ejemplo;
+
 CREATE TABLE `ejemplo`.`producto` (
   `idproducto` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
@@ -15,9 +17,8 @@ CREATE TABLE `imagenes` (
   `idimagenes` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
   `ruta` varchar(200) DEFAULT NULL,
-  `tipo` int(11) 1 NULL,
-  PRIMARY KEY (`idimagenes`),
-  UNIQUE KEY `imagenescol_UNIQUE` (`ruta`)
+  `tipo` int(11) DEFAULT 1 NULL,
+  PRIMARY KEY (`idimagenes`)
 );
 
 INSERT INTO `ejemplo`.`imagenes` (`nombre`, `ruta`) VALUES ('escala grises', 'https://picsum.photos/g/200/300');

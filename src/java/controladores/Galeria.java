@@ -65,9 +65,9 @@ public class Galeria extends HttpServlet {
             }
             conexion.close();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Galeria.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Galeria.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listaImagenes;
     }

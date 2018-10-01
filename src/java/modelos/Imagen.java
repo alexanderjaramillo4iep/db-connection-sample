@@ -9,6 +9,8 @@ package modelos;
  * @author Usuario
  */
 public class Imagen {
+    
+    public int idimagenes;
     public String nombre;
     public String ruta;
 }

@@ -80,9 +80,9 @@ public class InicioServlet extends HttpServlet {
                 u.setClave(resultados.getString("clave"));
             }
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InicioServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InicioServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if(conexion != null && !conexion.isClosed()) {

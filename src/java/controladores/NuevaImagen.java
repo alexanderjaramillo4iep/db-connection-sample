@@ -30,33 +30,6 @@ import modelos.Tipo;
  */
 public class NuevaImagen extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("jsp/nueva-imagen.jsp");
-        List<Tipo> tipos = tipos();
-        request.setAttribute("tipos", tipos);
-        
-        String nombre = request.getParameter("nombre");
-        String ruta = request.getParameter("ruta");
-        
-        if(nombre != null && !nombre.equals("")){
-            int tipo = Integer.parseInt(request.getParameter("tipo"));
-            System.out.println(nombre + "-" + ruta + "-" + tipo);
-            guardarImagen(nombre, ruta, tipo);
-        }
-        
-        rd.forward(request, response);
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -69,7 +42,16 @@ public class NuevaImagen extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("jsp/nueva-imagen.jsp");
+        
+        List<Tipo> tipos = tipos();
+        request.setAttribute("tipos", tipos);
+        
+        List<Imagen> imagenes = imagenes();
+        request.setAttribute("imagenes", imagenes);
+        
+        rd.forward(request, response);
     }
 
     /**
@@ -83,7 +65,28 @@ public class NuevaImagen extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("jsp/nueva-imagen.jsp");
+        List<Tipo> tipos = tipos();
+        request.setAttribute("tipos", tipos);
+        
+        String idimagenesStr = request.getParameter("idimagenes");
+        String nombre = request.getParameter("nombre");
+        String ruta = request.getParameter("ruta");
+        
+        int tipo = Integer.parseInt(request.getParameter("tipo"));
+        
+        if(idimagenesStr != null && !idimagenesStr.equals("")){
+            int idimagenes = Integer.parseInt(idimagenesStr);
+            actualizarImagen(idimagenes, nombre, ruta, tipo);
+        } else {
+            guardarImagen(nombre, ruta, tipo);
+        }
+        
+        List<Imagen> imagenes = imagenes();
+        request.setAttribute("imagenes", imagenes);
+        
+        rd.forward(request, response);
     }
 
     /**
@@ -98,7 +101,6 @@ public class NuevaImagen extends HttpServlet {
 
     private void guardarImagen(String nombre, String ruta, int tipo) {
         try {
-            System.out.println(nombre + "|separador|" + ruta);
             Class.forName("com.mysql.jdbc.Driver");
             Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/ejemplo", "root", "");
             PreparedStatement ps = conexion.prepareStatement("INSERT INTO `ejemplo`.`imagenes` (`nombre`, `ruta`, tipo) VALUES (?, ?, ?)");
@@ -130,11 +132,53 @@ public class NuevaImagen extends HttpServlet {
             }
             conexion.close();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NuevaImagen.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NuevaImagen.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listaTipos;
     }
 
+    List<Imagen> imagenes() {
+        List<Imagen> listaImagenes = new ArrayList<Imagen>();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/ejemplo", "root", "");
+            PreparedStatement ps = conexion.prepareStatement("SELECT * FROM imagenes");
+            ResultSet resultados = ps.executeQuery();
+            while(resultados.next()) {
+                int idimagenes = resultados.getInt("idimagenes");
+                String nombre = resultados.getString("nombre");
+                String ruta = resultados.getString("ruta");
+                Imagen i = new Imagen();
+                i.idimagenes = idimagenes;
+                i.nombre = nombre;
+                i.ruta = ruta;
+                listaImagenes.add(i);
+            }
+            conexion.close();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Galeria.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Galeria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaImagenes;
+    }
+
+    private void actualizarImagen(int idimagenes, String nombre, String ruta, int tipo) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/ejemplo", "root", "");
+            PreparedStatement ps = conexion.prepareStatement("UPDATE `ejemplo`.`imagenes` SET `nombre` = ?, `ruta` = ?, `tipo` = ? WHERE `idimagenes` = ?");
+            ps.setString(1, nombre);
+            ps.setString(2, ruta);
+            ps.setInt(3, tipo);
+            ps.setInt(4, idimagenes);
+            ps.execute();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(NuevaImagen.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(NuevaImagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
